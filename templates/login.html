@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
+</head>
+<body>
+  <div class="wrapper">
+    <form action="" method="post">
+      <h2>ورود</h2>
+      <div class="input-field">
+        <input type="text" name="username" required>
+        <label>ایمیل خود را وارد کنید</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="password" required>
+        <label>رمز عبور خود را وارد کنید</label>
+      </div>
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember">
+          <p>مرا به خاطر بسپار</p>
+        </label>
+        <a href="#">رمز عبور را فراموش کرده‌اید؟</a>
+      </div>
+      <button type="submit">ورود</button>
+      <div class="register">
+        <p>حساب کاربری ندارید؟ <a href="{{url_for('register')}}">ثبت‌نام کنید</a></p>
+      </div>
+      <div class="surprise-wrapper" style="margin-top:20px; text-align:center;">
+        <button id="surprise-btn" type="button">سورپرایز شو!</button>
+        <div id="surprise-image" style="margin-top:15px;"></div>
+      </div>
+
+      <script>
+      document.getElementById("surprise-btn").addEventListener("click", function() {
+          // انتخاب تصادفی Dog یا Cat
+          const apiList = [
+              "https://dog.ceo/api/breeds/image/random",
+              "https://api.thecatapi.com/v1/images/search"
+          ];
+          const api = apiList[Math.floor(Math.random() * apiList.length)];
+
+          fetch(api)
+          .then(response => response.json())
+          .then(data => {
+              let imgUrl;
+              if(api.includes("dog.ceo")) {
+                  imgUrl = data.message; // dog API
+              } else {
+                  imgUrl = data[0].url; // cat API
+              }
+
+              const imgDiv = document.getElementById("surprise-image");
+              imgDiv.innerHTML = `<img src="${imgUrl}" style="max-width:300px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">`;
+          })
+          .catch(err => {
+              console.error(err);
+              alert("متاسفانه عکس بارگذاری نشد!");
+          });
+      });
+      </script>
+
+    </form>
+  </div>
+</body>
+</html>

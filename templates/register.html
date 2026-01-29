@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت‌نام</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            direction: rtl; 
+            padding: 20px; 
+        }
+        .alert { color: red; margin: 10px 0; }
+        .success { color: green; }
+        input { 
+            margin: 5px 0; 
+            padding: 8px; 
+            width: 200px; 
+        }
+        #generatePassword {
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #generatePassword:hover {
+            background: #0056b3;
+        }
+        #generatedPassword {
+            margin-top: 10px;
+            padding: 8px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 20px;
+        }
+    </style>
+    <!-- jQuery را از CDN وارد می‌کنیم -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>فرم ثبت‌نام</h2>
+    <form action="{{ url_for('register') }}" method="POST">
+        <div>
+            <label>نام کاربری:</label><br>
+            <input type="text" name="username" required>
+        </div>
+        <div>
+            <label>رمز عبور:</label><br>
+            <input type="password" name="password" id="passwordInput" required>
+        </div>
+        <!-- دکمه تولید رمز عبور -->
+        <button type="button" id="generatePassword">تولید رمز عبور</button>
+        <!-- جای نمایش رمز تولید شده -->
+        <div id="generatedPassword">رمز تولید شده اینجا نمایش داده می‌شود.</div>
+        <br><br>
+        <input type="submit" value="ثبت‌نام">
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#generatePassword').on('click', function(e) {
+                e.preventDefault();
+
+                // درخواست به سرور برای تولید رمز
+                $.get("{{ url_for('password_generator') }}", function(data) {
+                    // نمایش رمز در صفحه
+                    $('#generatedPassword').text('رمز تولید شده: ' + data.password);
+                });
+            });
+        });
+    </script>
+    <button><a href="{{ url_for('login') }}" class="back-link">بازگشت به صفحه ورود</a></button>
+</body>
+</html>

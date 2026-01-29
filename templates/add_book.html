@@ -1,0 +1,42 @@
+<!-- File: templates/add_book.html -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اضافه کردن کتاب</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/add_book.css') }}">
+</head>
+<body>
+  <div class="wrapper">
+    <form action="{{ url_for('add_book') }}" method="post">
+      <h2>اضافه کردن کتاب جدید</h2>
+      <div class="input-field">
+        <input type="text" name="title" required>
+        <label>عنوان کتاب</label>
+      </div>
+      <div class="input-field">
+        <input type="text" name="author" required>
+        <label>نویسنده</label>
+      </div>
+      <div class="input-field">
+        <input type="number" name="pages" required>
+        <label>تعداد صفحات</label>
+      </div>
+      <div class="input-field">
+        <input type="text" name="genre" required>
+        <label>ژانر</label>
+      </div>
+      <div class="input-field">
+        <select name="status" required>
+          <option value="" disabled selected>وضعیت کتاب</option>
+          <option value="خوانده شده">خوانده شده</option>
+          <option value="در حال مطالعه">در حال مطالعه</option>
+          <option value="نخوانده">نخوانده</option>
+        </select>
+      </div>
+      <button type="submit">ثبت کتاب</button>
+    </form>
+  </div>
+</body>
+</html>
